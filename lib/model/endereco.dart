@@ -1,11 +1,11 @@
 class Endereco {
-  string? cep;
-  string? logradouro;
-  string? complemento;
-  string? bairro;
-  string? localidade;
-  string? uf;
-  string? estado;
+  String? cep;
+  String? logradouro;
+  String? complemento;
+  String? bairro;
+  String? localidade;
+  String? uf;
+  String? estado;
 
   Endereco({
     this.cep,

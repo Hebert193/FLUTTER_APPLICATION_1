@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/model/endereco.dart';
+import 'package:flutter_application_1/models/endereco.dart';
 
 class ViaCepService {
   Future<Endereco?> buscarEndereco(String cep) async {

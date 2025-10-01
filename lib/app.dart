@@ -11,7 +11,7 @@ class ViaCepApi extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomePage(title: 'ViaCep API'),
+      home: const HomePage(),
     );
   }
 }

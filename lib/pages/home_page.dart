@@ -17,43 +17,64 @@ class _HomePageState extends State<HomePage> {
   TextEditingController controllerBairro = TextEditingController();
   TextEditingController controllerCidade = TextEditingController();
   TextEditingController controllerEstado = TextEditingController();
-  Endereco? endereco; //Variavel pode receber null "?"
+  Endereco? endereco; //Variável pode receber null "?"
+  bool isLoading = false;
 
   ViaCepService viaCepService = ViaCepService();
 
-  Future <void> buscarCep(String cep) async{
-    Endereco? response = await viaCepService.buscarEndereco(cep);
-
-    if (response?.localidade == null) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            icon: Icon(Icons.warning),
-            title: Text("Atenção"),
-            content: Text("Cep não encontrado"),
-          );
-        },
-      );
-      return;
-    }
-
+  Future<void> buscarCep(String cep) async {
+    clearControllers();
     setState(() {
-      endereco = response;
+      isLoading = true;
     });
+    try {
+      Endereco? response = await viaCepService.buscarEndereco(cep);
 
-    setControllersCep(endereco!);
+      if (response?.localidade == null) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              icon: Icon(Icons.warning),
+              title: Text("Atenção"),
+              content: Text("Cep não encontrado"),
+            );
+          },
+        );
+        controllerCep.clear();
+        return;
+      }
+
+      setState(() {
+        endereco = response;
+      });
+
+      setControllersCep(endereco!);
+    } catch (erro) {
+      throw Exception("Erro ao buscar CEP: $erro");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
-  void setControllersCep(Endereco endereco)
-  {
+  void setControllersCep(Endereco endereco) {
     controllerLogradouro.text = endereco.logradouro!;
-    controllerComplemento.text = endereco.complemento ?? "";
+    controllerComplemento.text = endereco.complemento!;
     controllerBairro.text = endereco.bairro!;
     controllerCidade.text = endereco.localidade!;
-    controllerEstado.text = endereco.estado ?? "";
+    controllerEstado.text = endereco.estado!;
   }
-  
+
+  void clearControllers() {
+    controllerLogradouro.clear();
+    controllerComplemento.clear();
+    controllerBairro.clear();
+    controllerCidade.clear();
+    controllerEstado.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,17 +90,34 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
+                onChanged: (valor) {
+                  if (valor.isEmpty) {
+                    setState(() {
+                      endereco = null;
+                    });
+                    clearControllers();
+                  }
+                },
                 controller: controllerCep,
                 maxLength: 8,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      buscarCep(controllerCep.text);
-                      },
-                  ),
+                  suffixIcon: isLoading
+                     ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            buscarCep(controllerCep.text);
+                          },
+                          icon: Icon(Icons.search),
+                        ),
                   border: OutlineInputBorder(),
                   labelText: "CEP",
                 ),
@@ -91,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                   labelText: "Logradouro",
                 ),
               ),
-               TextField(
+              TextField(
                 controller: controllerComplemento,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),

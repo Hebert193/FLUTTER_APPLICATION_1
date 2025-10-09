@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/models/endereco.dart';
-import 'package:flutter_application_1/services/via_cep_service.dart';
+import 'package:via_cep_api/Models/endereco.dart';
+import 'package:via_cep_api/Services/via_cep_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -68,10 +68,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void clearControllers() {
-    controllerLogradouro.clear();
-    controllerComplemento.clear();
     controllerBairro.clear();
+    controllerLogradouro.clear();
     controllerCidade.clear();
+    controllerLogradouro.clear();
     controllerEstado.clear();
   }
 
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   suffixIcon: isLoading
-                     ? SizedBox(
+                      ? SizedBox(
                           width: 20,
                           height: 20,
                           child: Padding(
@@ -122,41 +122,47 @@ class _HomePageState extends State<HomePage> {
                   labelText: "CEP",
                 ),
               ),
-              TextField(
-                controller: controllerLogradouro,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Logradouro",
+              if (endereco?.bairro != null)
+                Column(
+                  spacing: 10,
+                  children: [
+                    TextField(
+                      controller: controllerLogradouro,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Logradouro",
+                      ),
+                    ),
+                    TextField(
+                      controller: controllerComplemento,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Complemento",
+                      ),
+                    ),
+                    TextField(
+                      controller: controllerBairro,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Bairro",
+                      ),
+                    ),
+                    TextField(
+                      controller: controllerCidade,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Cidade",
+                      ),
+                    ),
+                    TextField(
+                      controller: controllerEstado,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Estado",
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              TextField(
-                controller: controllerComplemento,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Complemento",
-                ),
-              ),
-              TextField(
-                controller: controllerBairro,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Bairro",
-                ),
-              ),
-              TextField(
-                controller: controllerCidade,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Cidade",
-                ),
-              ),
-              TextField(
-                controller: controllerEstado,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Estado",
-                ),
-              ),
             ],
           ),
         ),

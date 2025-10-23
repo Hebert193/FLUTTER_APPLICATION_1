@@ -17,23 +17,22 @@ class Usuario {
 
   Map<String, dynamic> toMap() {
     return {
-      'nome': nome,
-      'email': email,
-      'telefone': telefone,
-      'cpf': cpf,
-      'senha': senha,
+      "nome": nome,
+      "email": email,
+      "telefone": telefone,
+      "senha": senha,
+      "cpf": cpf,
     };
   }
 
   factory Usuario.fromMap(Map<String, dynamic> map, String idUser) {
     return Usuario(
       id: idUser,
-      nome: map['nome'],
-      email: map['email'],
-      telefone: map['telefone'],
-      cpf: map['cpf'],
-      senha: map['senha'],
+      nome: map["nome"],
+      email: map["email"],
+      telefone: map["telefone"],
+      senha: map["senha"],
+      cpf: map["cpf"],
     );
   }
-
 }

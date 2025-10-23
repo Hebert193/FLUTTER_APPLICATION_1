@@ -65,7 +65,7 @@ class SharedPreferencesService {
       bool result = await _preferences!.setStringList(key, value);
       return result;
     } catch (erro) {
-      debugPrint("Falha ao salvar alista de strings: $erro");
+      debugPrint("Falha ao salvar a lista de strings: $erro");
       return false;
     }
   }
@@ -74,7 +74,7 @@ class SharedPreferencesService {
     try {
       return _preferences!.getInt(key);
     } catch (erro) {
-      debugPrint("Falha ao recuperar inteiro: $erro");
+      debugPrint("Impossível ler o valor do inteiro: $erro");
       return null;
     }
   }
@@ -83,47 +83,52 @@ class SharedPreferencesService {
     try {
       return _preferences!.getString(key);
     } catch (erro) {
-      debugPrint("Falha ao recuperar string: $erro");
+      debugPrint("Impossível ler o valor da string: $erro");
       return null;
     }
   }
-  double? getDouble(String key) {
-    try {
-      return _preferences!.getDouble(key);
-    } catch (erro) {
-      debugPrint("Falha ao recuperar double: $erro");
-      return null;
-    }
-  }
+
   bool? getBool(String key) {
     try {
       return _preferences!.getBool(key);
     } catch (erro) {
-      debugPrint("Falha ao recuperar bool: $erro");
+      debugPrint("Impossível ler o valor do booleano: $erro");
       return null;
     }
   }
+
+  double? getDouble(String key) {
+    try {
+      return _preferences!.getDouble(key);
+    } catch (erro) {
+      debugPrint("Impossível ler o valor do double: $erro");
+      return null;
+    }
+  }
+
   List<String>? getStringList(String key) {
     try {
       return _preferences!.getStringList(key);
     } catch (erro) {
-      debugPrint("Falha ao recuperar lista de strings: $erro");
+      debugPrint("Impossível ler o valor da lista: $erro");
       return null;
     }
   }
+
   Future<bool> remove(String key) async {
     try {
       return await _preferences!.remove(key);
     } catch (erro) {
-      debugPrint("Falha ao remover chave: $erro");
+      debugPrint("Erro ao remover a chave $key: $erro");
       return false;
     }
   }
-  Future<bool> clear() async {
+
+  Future<bool> clearAll() async {
     try {
       return await _preferences!.clear();
     } catch (erro) {
-      debugPrint("Falha ao limpar preferências: $erro");
+      debugPrint("Erro ao limpar o LocalStorage: $erro");
       return false;
     }
   }
@@ -132,7 +137,7 @@ class SharedPreferencesService {
     try {
       return _preferences!.containsKey(key);
     } catch (erro) {
-      debugPrint("Falha ao verificar chave: $erro");
+      debugPrint("Erro ao verificar chave: $erro");
       return false;
     }
   }
@@ -141,22 +146,8 @@ class SharedPreferencesService {
     try {
       return _preferences!.getKeys();
     } catch (erro) {
-      debugPrint("Falha ao recuperar chaves: $erro");
+      debugPrint("Erro ao verificar chave: $erro");
       return {};
     }
   }
-
-  Future<void> reload() async {
-    try {
-      await _preferences!.reload();
-    } catch (erro) {
-      debugPrint("Falha ao recarregar preferências: $erro");
-    }
-  }
-
-  Future<void> dispose() async {
-    _instance = null;
-    _preferences = null;
-  }
-
 }

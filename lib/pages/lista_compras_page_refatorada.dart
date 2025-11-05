@@ -39,7 +39,6 @@ class _ListaComprasPageState extends State<ListaComprasPage> {
 
   bool _compradosExpandido = false;
   bool _emFaltaExpandido = false;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -293,7 +292,6 @@ class _ListaComprasPageState extends State<ListaComprasPage> {
 
   /// Adiciona um novo item
   Future<void> _adicionarItem(ItemCompra item) async {
-    setState(() => _isLoading = true);
 
     try {
       await _firebaseService.create(item.toMap());
@@ -301,13 +299,12 @@ class _ListaComprasPageState extends State<ListaComprasPage> {
     } catch (e) {
       MessageUtils.showError(context, 'Erro ao adicionar item: $e');
     } finally {
-      setState(() => _isLoading = false);
     }
   }
 
   /// Edita um item existente
   Future<void> _editarItem(ItemCompra item) async {
-    final resultado = await EditItemBottomSheet.show(
+    await EditItemBottomSheet.show(
       context,
       item: item,
       onItemUpdated: (itemAtualizado) async {
@@ -359,7 +356,6 @@ class _ListaComprasPageState extends State<ListaComprasPage> {
 
     if (!confirmar) return;
 
-    setState(() => _isLoading = true);
 
     try {
       // Usa o método otimizado para limpar toda a coleção de uma vez
@@ -369,7 +365,6 @@ class _ListaComprasPageState extends State<ListaComprasPage> {
     } catch (e) {
       MessageUtils.showError(context, 'Erro ao finalizar feira: $e');
     } finally {
-      setState(() => _isLoading = false);
     }
   }
 

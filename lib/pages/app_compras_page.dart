@@ -61,7 +61,7 @@ class ItemCompra {
 }
 
 class ListaComprasPage extends StatefulWidget {
-  const ListaComprasPage({Key? key}) : super(key: key);
+  const ListaComprasPage({super.key});
 
   @override
   State<ListaComprasPage> createState() => _ListaComprasPageState();
@@ -85,7 +85,7 @@ class _ListaComprasPageState extends State<ListaComprasPage>
   String? _categoriaSelecionada;
   List<String> _sugestoesItens = [];
   bool _mostrarSugestoes = false;
-  bool _formularioExpandido = false; // Começa colapsado
+// Começa colapsado
 
   Map<String, bool> _categoriasExpandidas = {};
   List<String> _ordemCategorias = [];
@@ -1314,7 +1314,7 @@ class _ListaComprasPageState extends State<ListaComprasPage>
       _quantidadeController.clear();
       setState(() {
         _categoriaSelecionada = null;
-        _formularioExpandido = false; // Garante que o estado seja resetado
+// Garante que o estado seja resetado
       });
       _removeSuggestionsOverlay(); // Garante que o overlay seja removido ao fechar o modal
     });

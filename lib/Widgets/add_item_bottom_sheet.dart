@@ -373,24 +373,4 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet> {
     );
   }
 
-  /// Adiciona o item e fecha o bottom sheet
-  void _onSubmitAndClose() {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isLoading = true);
-
-    // Cria o item
-    final novoItem = ItemCompra(
-      id: '',
-      nome: _nomeController.text.trim(),
-      quantidade: _quantidadeController.text.trim(),
-      categoria: _categoriaSelecionada,
-    );
-
-    // Chama callback
-    widget.onItemAdded(novoItem);
-
-    // Fecha o bottom sheet
-    Navigator.of(context).pop();
-  }
 }

@@ -116,7 +116,7 @@ class _FormularioCadastroUsuarioState extends State<FormularioCadastroUsuario>
         "senha": _senhaController.text,
       };
 
-      String idGerado = await _firebaseService.create(usuarioData);
+      await _firebaseService.create(usuarioData);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

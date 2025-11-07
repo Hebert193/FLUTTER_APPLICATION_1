@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:via_cep_api/Models/endereco.dart';
+import 'package:via_cep_api/Models/endereco_model.dart';
 
 class ViaCepService {
   Future<Endereco?> buscarEndereco(String cep) async {
@@ -16,6 +16,5 @@ class ViaCepService {
 
       return endereco;
     }
-    return null;
   }
 }

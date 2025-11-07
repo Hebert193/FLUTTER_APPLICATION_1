@@ -12,7 +12,7 @@ class LocationService {
     LocationPermission permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.deniedForever) {
-      print("Permissões de localização estão permanentemente negadas");
+      print("Permissao negada permanentemente");
       return null;
     }
 

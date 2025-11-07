@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityService {
@@ -9,6 +8,14 @@ class ConnectivityService {
 
   void initialize() {
     _connectivityController = StreamController.broadcast();
+
+    checkconnectivity();
+
+    _connectivity.onConnectivityChanged.listen((
+      List<ConnectivityResult> listResult,
+    ) {
+      _verifyConnectionStatus(listResult);
+    });
   }
 
   Future<bool> checkconnectivity() async {
@@ -55,4 +62,7 @@ class ConnectivityService {
     return _connectivityController!.stream;
   }
 
+  void dispose() {
+    _connectivityController?.close();
+  }
 }
